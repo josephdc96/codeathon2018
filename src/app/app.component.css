@@ -1,0 +1,12 @@
+.weather-row {
+    margin: 10px
+}
+
+.card-spacing {
+    margin-top: 10px;
+}
+
+.current {
+    font-size: 2em;
+    margin-bottom: calc((48px - 2em) / 2)
+}
