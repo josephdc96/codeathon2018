@@ -102,11 +102,11 @@ export class AppComponent implements OnInit {
         }
     }
 
-    convertToC(F: Number) {
+    convertToC(F: number) {
         return (F - 32) * 5 / 9;
     }
 
-    convertToF(C: Number) {
+    convertToF(C: number) {
         return (C * 9 / 5) + 32;
     }
 
@@ -151,7 +151,7 @@ export class AppComponent implements OnInit {
                 });*/
                 const date = new Date(y.time * 1000);
                 let hour = date.getHours();
-                let minute = date.getMinutes();
+                const minute = date.getMinutes();
                 let m = 'AM';
                 if (hour > 12) {
                     hour -= 12;
@@ -164,7 +164,9 @@ export class AppComponent implements OnInit {
 
                 const time = hour + ':' + minute;
 
-                if (y.precipProbability === 0) y.precipProbability + .01;
+                if (y.precipProbability === 0) {
+                    y.precipProbability = y.precipProbability + .01;
+                }
 
                 this.doughnutChartData.push(y.precipProbability * 100);
                 this.doughnutChartLabels.push(time + '-' + (y.precipProbability * 100) + '%');
@@ -253,12 +255,22 @@ export class AppComponent implements OnInit {
         });
     }
 
-    getColor(percent: Number) {
-        if (percent == 0) return 'rgba(255, 255, 255, 1)';
-        if (percent < 0.2) return 'rgba(204, 204, 255, 1)';
-        if (percent < 0.4) return 'rgba(102, 102, 255, 1)';
-        if (percent < 0.6) return 'rgba(51, 51, 255, 1)';
-        if (percent < 0.8) return 'rgba(0, 0, 255, 1)';
+    getColor(percent: number) {
+        if (percent === 0) {
+            return 'rgba(255, 255, 255, 1)';
+        }
+        if (percent < 0.2) {
+            return 'rgba(204, 204, 255, 1)';
+        }
+        if (percent < 0.4) {
+            return 'rgba(102, 102, 255, 1)';
+        }
+        if (percent < 0.6)  {
+            return 'rgba(51, 51, 255, 1)';
+        }
+        if (percent < 0.8) {
+            return 'rgba(0, 0, 255, 1)';
+        }
         return 'rgba()';
     }
 
@@ -317,10 +329,10 @@ export class AppComponent implements OnInit {
 export class Forecast {
     day: String;
     weather: String;
-    currentTemp?: Number;
-    highTemp?: Number;
-    lowTemp?: Number;
-    precipitation: Number;
+    currentTemp?: number;
+    highTemp?: number;
+    lowTemp?: number;
+    precipitation: number;
 }
 
 export class Data {
@@ -328,9 +340,9 @@ export class Data {
     currently: {
         summary: String,
         icon: String,
-        precipProbability: Number,
-        temperature: Number,
-        apparentTemperature: Number
+        precipProbability: number,
+        temperature: number,
+        apparentTemperature: number
     };
     minutely: {
         summary: String,
@@ -346,8 +358,8 @@ export class Data {
         data: {
             time: number,
             icon: String,
-            precipProbability: Number,
-            temperature: Number
+            precipProbability: number,
+            temperature: number
         }[]
     };
     daily: {
@@ -355,9 +367,9 @@ export class Data {
         data: {
             time: number,
             icon: String,
-            precipProbability: Number,
-            temperatureHigh: Number,
-            temperatureLow: Number,
+            precipProbability: number,
+            temperatureHigh: number,
+            temperatureLow: number,
         }[]
     };
     alerts: {
