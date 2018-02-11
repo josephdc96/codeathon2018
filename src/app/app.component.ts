@@ -23,14 +23,7 @@ export class AppComponent implements OnInit {
         location: ''
     };
     imperial = true;
-    currentday: Forecast = {
-        day: 'Today',
-        weather: 'chanceflurries',
-        currentTemp: 61,
-        highTemp: 82,
-        lowTemp: 24,
-        precipitation: 50
-    };
+    currentday: Forecast = null;
 
     sevenday: Forecast[] = [
     ];

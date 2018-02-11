@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  War Eagle Code
+  Weagle Weather
   <span class="spacer"></span>
   <mat-slide-toggle color="accent" [checked]="imperial" (click)="imperial_click()">Imperial Units</mat-slide-toggle>
   <button mat-button (click)="openLocation()">
@@ -22,7 +22,7 @@
   <div fxFlex="25%">
     <mat-card>
       <mat-card-title>Current Weather</mat-card-title>
-      <mat-card-content class="day">
+      <mat-card-content class="day" *ngIf="currentday != null">
         <i class="wu wu-black wu-64" [ngClass]="'wu-' + currentday.weather"></i>
         <ul>
           <li><span class="current">{{currentday.currentTemp | number : '1.0-0'}}°{{imperial ? 'F' : 'C'}}</span></li>
@@ -54,7 +54,7 @@
           <div class="day" *ngFor="let day of sevenday">
             <i class="wu wu-black wu-64" [ngClass]="'wu-' + day.weather"></i>
             <ul class="weather">
-              <li>{{day.day}}</li>
+              <li><b>{{day.day}}</b></li>
               <li>{{day.highTemp | number : '1.0-0'}}°{{imperial ? 'F' : 'C'}}/{{day.lowTemp | number : '1.0-0'}}°{{imperial ? 'F' : 'C'}}</li>
               <li>{{day.precipitation | number : '1.0-0'}}%</li>
             </ul>
@@ -75,7 +75,7 @@
               <div class="day" *ngFor="let day of historical">
                 <i class="wu wu-black wu-64" [ngClass]="'wu-' + day.weather"></i>
                 <ul>
-                  <li>{{day.day}}</li>
+                  <li><b>{{day.day}}</b></li>
                   <li>{{day.highTemp | number : '1.0-0'}}°{{imperial ? 'F' : 'C'}}/{{day.lowTemp | number : '1.0-0'}}°{{imperial ? 'F' : 'C'}}</li>
                   <li>{{day.precipitation | number : '1.0-0'}}%</li>
                 </ul>
@@ -93,7 +93,7 @@
           <div class="day" *ngFor="let day of hourly">
             <i class="wu wu-black wu-64" [ngClass]="'wu-' + day.weather"></i>
             <ul>
-              <li>{{day.day}}</li>
+              <li><b>{{day.day}}</b></li>
               <li>{{day.highTemp | number : '1.0-0'}}°{{imperial ? 'F' : 'C'}}</li>
               <li>{{day.precipitation | number : '1.0-0'}}%</li>
             </ul>
