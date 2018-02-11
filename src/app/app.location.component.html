@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Select your location</h1>
+<div mat-dialog-content>
+    <mat-form-field style="width: 100%">
+        <input matInput placeholder="Location: City, State; Zip; or Latitute/Longitude" #search [formControl]="searchControl">
+    </mat-form-field>
+    {{location}}
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="dat" cdkFocusInitial>Ok</button>
+</div>

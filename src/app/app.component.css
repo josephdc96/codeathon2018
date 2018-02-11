@@ -10,3 +10,31 @@
     font-size: 2em;
     margin-bottom: calc((48px - 2em) / 2)
 }
+
+.hourly {
+    overflow: auto;
+    max-height: 528px;
+}
+
+.day {
+    height: 63px;
+}
+
+.day i {
+    vertical-align: top;
+    float: left;
+}
+
+.day ul {
+    list-style-type: none;
+}
+
+agm-map {
+    height: 300px;
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}

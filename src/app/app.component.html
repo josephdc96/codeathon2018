@@ -1,45 +1,105 @@
 <mat-toolbar color="primary">
-  War Eagle Code<span class="spacer"></span><mat-slide-toggle color="accent" checked="true">Imperial Units</mat-slide-toggle><button mat-button><mat-icon>location_on</mat-icon>{{location}}</button>
+  War Eagle Code
+  <span class="spacer"></span>
+  <mat-slide-toggle color="accent" [checked]="imperial" (click)="imperial_click()">Imperial Units</mat-slide-toggle>
+  <button mat-button (click)="openLocation()">
+    <mat-icon>location_on</mat-icon>{{location.location}}</button>
 </mat-toolbar>
-<div class="container weather-row"
-  fxLayout
-  fxLayout.xs="column"
-  fxLayoutAlign="center"
-  fxLayoutGap="10px"
-  fxLayoutGap.xs="0">
-  <div fxFlex="33%">
+<div class="container weather-row" *ngIf='data != null && data.alerts.length > 0'>
+  <mat-card class="alerts">
+    <mat-card-title>ALERTS</mat-card-title>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let alert of data.alerts">
+          <mat-icon mat-list-icon color="getAlertIcon(alert.severity)">getAlert(alert.severity)</mat-icon>
+        </mat-list-item>
+      </mat-list>>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div class="container weather-row" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0">
+  <div fxFlex="25%">
     <mat-card>
       <mat-card-title>Current Weather</mat-card-title>
-      <mat-card-content>
-        <i class="wu wu-black wu-64 wu-chanceflurries"></i>
-        <span class="current">61&deg;F</span>
+      <mat-card-content class="day">
+        <i class="wu wu-black wu-64" [ngClass]="'wu-' + currentday.weather"></i>
+        <ul>
+          <li><span class="current">{{currentday.currentTemp | number : '1.0-0'}}°{{imperial ? 'F' : 'C'}}</span></li>
+          <li>{{currentday.highTemp | number : '1.0-0'}}°{{imperial ? 'F' : 'C'}}/{{currentday.lowTemp | number : '1.0-0'}}°{{imperial ? 'F' : 'C'}}</li>
+        </ul>
       </mat-card-content>
     </mat-card>
     <mat-card class="card-spacing">
-      <mat-card-title>About War Eagle Code</mat-card-title>
-      <mat-card-content>
-        <p>
-          War Eagle Code consists of three friends within Auburn's CSSE department: Joseph Cauble, Jake Laney, and 
-          Jesse "Trey" Roach. We are from Birmingham, Huntsville, and Montgomery, respectively and met at Auburn in a church
-          group freshman year. 
-        </p>
-      </mat-card-content>
-    </mat-card>
+        <mat-card-title>Minute-by-Minute</mat-card-title>
+        <mat-card-content>
+          <div>
+            <!--<div class="day" *ngFor="let day of minute">
+              <i class="wu wu-black wu-64" [ngClass]="'wu-' + day.weather"></i>
+              <span>{{day.day}}</span>
+              <span>{{day.precipitation | number : '1.0-0'}}%</span>
+            </div>-->
+            <div *ngIf="chart">
+              <canvas id="canvas">{{chart}}</canvas>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
   </div>
-  <div fxFlex="50%">
+  <div fxFlex="25%">
     <mat-card>
       <mat-card-title>7-Day Forecast</mat-card-title>
-    </mat-card>
-    <mat-card class="card-spacing">
-      <mat-card-title>Historical Data</mat-card-title>
+      <mat-card-content>
+        <div class="hourly">
+          <div class="day" *ngFor="let day of sevenday">
+            <i class="wu wu-black wu-64" [ngClass]="'wu-' + day.weather"></i>
+            <ul class="weather">
+              <li>{{day.day}}</li>
+              <li>{{day.highTemp | number : '1.0-0'}}°{{imperial ? 'F' : 'C'}}/{{day.lowTemp | number : '1.0-0'}}°{{imperial ? 'F' : 'C'}}</li>
+              <li>{{day.precipitation | number : '1.0-0'}}%</li>
+            </ul>
+            <br style="clear:both"/>
+            <!--<span>{{day.day}}</span>
+            <span>{{day.highTemp | number : '1.0-0'}}°{{imperial ? 'F' : 'C'}}/{{day.lowTemp | number : '1.0-0'}}°{{imperial ? 'F' : 'C'}}</span>
+            <span>{{day.precipitation | number : '1.0-0'}}%</span>-->
+          </div>
+        </div>
+      </mat-card-content>
     </mat-card>
   </div>
-  <div fxFlex="17%">
+  <div fxFlex="25%">
+      <mat-card>
+          <mat-card-title>Historical Data</mat-card-title>
+          <mat-card-content>
+            <div class="hourly">
+              <div class="day" *ngFor="let day of historical">
+                <i class="wu wu-black wu-64" [ngClass]="'wu-' + day.weather"></i>
+                <ul>
+                  <li>{{day.day}}</li>
+                  <li>{{day.highTemp | number : '1.0-0'}}°{{imperial ? 'F' : 'C'}}/{{day.lowTemp | number : '1.0-0'}}°{{imperial ? 'F' : 'C'}}</li>
+                  <li>{{day.precipitation | number : '1.0-0'}}%</li>
+                </ul>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+  </div>
+  <div fxFlex="25%">
+    
     <mat-card>
-      <mat-card-title>Minute-by-Minute</mat-card-title>
-    </mat-card>
-    <mat-card class="card-spacing">
       <mat-card-title>Hourly Forecast</mat-card-title>
+      <mat-card-content>
+        <div class="hourly">
+          <div class="day" *ngFor="let day of hourly">
+            <i class="wu wu-black wu-64" [ngClass]="'wu-' + day.weather"></i>
+            <ul>
+              <li>{{day.day}}</li>
+              <li>{{day.highTemp | number : '1.0-0'}}°{{imperial ? 'F' : 'C'}}</li>
+              <li>{{day.precipitation | number : '1.0-0'}}%</li>
+            </ul>
+          </div>
+        </div>
+      </mat-card-content>
     </mat-card>
   </div>
 </div>
