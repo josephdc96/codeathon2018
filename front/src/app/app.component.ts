@@ -158,7 +158,7 @@ export class AppComponent implements OnInit {
                 const time = hour + ':' + minute;
 
                 if (y.precipProbability === 0) {
-                    y.precipProbability = y.precipProbability + .01;
+                    y.precipProbability = y.precipProbability + .001;
                 }
 
                 this.doughnutChartData.push(y.precipProbability * 100);
