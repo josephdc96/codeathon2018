@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { DarkSkyApi } from 'dark-sky-api';
 import { Chart } from 'chart.js';
 import * as moment from 'moment';
+import { environment } from '../environments/environment.prod';
 
 @Component({
     selector: 'app-root',
@@ -14,7 +15,6 @@ import * as moment from 'moment';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-    apiKey = '05df4dec29e779391562dc0828e8d3e9';
     data: Data = null;
 
     location = {
@@ -104,7 +104,7 @@ export class AppComponent implements OnInit {
     }
 
     getDay() {
-        const url = 'http://localhost:3000/daily' + '/' + this.location.latitude + '/' + this.location.longitude;
+        const url = `${environment.serverURL}/daily/${this.location.latitude}/${this.location.longitude}`;
         this.http.get<Data>(url).subscribe(data => {
             this.currentday = {
                 day: 'Today',
@@ -235,7 +235,7 @@ export class AppComponent implements OnInit {
         ];
 
         times.forEach(x => {
-            const url = 'http://localhost:3000/history/' + this.location.latitude + '/' + this.location.longitude + '/' + x;
+            const url = `${environment.serverURL}/history/${this.location.latitude}/${this.location.longitude}/${x}`;
             this.http.get<Data>(url).subscribe(data => {
                 this.historical.push({
                     day: new Date(x * 1000).toDateString(),

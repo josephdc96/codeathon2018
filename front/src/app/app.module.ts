@@ -18,6 +18,7 @@ import { AgmCoreModule } from '@agm/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { environment } from '../environments/environment.prod';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     BrowserAnimationsModule,
     FlexLayoutModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCbFyJb0q8Fro5OIsQte3oD6gu0gfnhA54',
+      apiKey: environment.mapsKey,
       libraries: ['places']
     }),
     HttpClientModule,
