@@ -12,10 +12,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { AgmCoreModule } from '@agm/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { ChartsModule } from 'ng2-charts'
 import { environment } from '../environments/environment.prod';
 
 @NgModule({
@@ -27,10 +26,6 @@ import { environment } from '../environments/environment.prod';
     BrowserModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    AgmCoreModule.forRoot({
-      apiKey: environment.mapsKey,
-      libraries: ['places']
-    }),
     HttpClientModule,
     ReactiveFormsModule,
     ChartsModule,
