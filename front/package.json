@@ -1,7 +1,9 @@
 {
-  "name": "codeathon2018",
-  "version": "0.0.0",
-  "license": "MIT",
+  "name": "codeathon-front",
+  "version": "2.0.0-beta.0",
+  "license": "GPL-3.0",
+  "description": "Backend component of Joseph Cauble's 2018 Auburn Codeathon entry",
+  "repository": "https://github.com/josephdc96/codeathon2018",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
