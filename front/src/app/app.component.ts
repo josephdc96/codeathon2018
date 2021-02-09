@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit, NgZone, ViewChild, ElementRef } from '@angular/core';
-import { MatDialogRef, MatDialog, MAT_DIALOG_DATA, MatDateFormats } from '@angular/material';
+import { MatDateFormats } from '@angular/material/core';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MapsAPILoader } from '@agm/core';
 import { FormControl } from '@angular/forms';
 import { } from 'googlemaps';
@@ -390,7 +391,7 @@ export class LocationDialogComponent implements OnInit {
     public searchControl: FormControl;
     public zoom: number;
 
-    @ViewChild('search')
+    @ViewChild('search', { static: true })
     public searchElementRef: ElementRef;
 
     constructor(
