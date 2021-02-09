@@ -1,8 +1,7 @@
 import { Component, Inject, OnInit, NgZone, ViewChild, ElementRef } from '@angular/core';
-import { MatDialogRef, MatDialog, MAT_DIALOG_DATA, MatDateFormats } from '@angular/material';
-import { MapsAPILoader } from '@agm/core';
+import { MatDateFormats } from '@angular/material/core';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
-import { } from 'googlemaps';
 import { HttpClient } from '@angular/common/http';
 import { DarkSkyApi } from 'dark-sky-api';
 import { Chart } from 'chart.js';
@@ -45,7 +44,7 @@ export class AppComponent implements OnInit {
     doughnutColors: any[] = [
     ];
 
-    chart = [];
+    chart: Chart = null;
 
     hourly: Forecast[] = [
     ];
@@ -170,7 +169,7 @@ export class AppComponent implements OnInit {
                 data: {
                     datasets: [{
                         data: this.doughnutChartData,
-                        labels: this.doughnutChartLabels
+                        
                     }]
                 },
                 options: {
@@ -390,13 +389,12 @@ export class LocationDialogComponent implements OnInit {
     public searchControl: FormControl;
     public zoom: number;
 
-    @ViewChild('search')
+    @ViewChild('search', { static: true })
     public searchElementRef: ElementRef;
 
     constructor(
         public dialogRef: MatDialogRef<LocationDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
-        private mapsAPILoader: MapsAPILoader,
         private ngZone: NgZone) {
 
     }
@@ -406,24 +404,7 @@ export class LocationDialogComponent implements OnInit {
 
         this.setCurrentPosition();
 
-        this.mapsAPILoader.load().then(() => {
-            const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-            });
-            autocomplete.addListener('place_changed', () => {
-                this.ngZone.run(() => {
-                    const place: google.maps.places.PlaceResult = autocomplete.getPlace();
-
-                    if (place.geometry === undefined || place.geometry === null) {
-                        return;
-                    }
-
-                    this.dat.latitude = place.geometry.location.lat();
-                    this.dat.longitude = place.geometry.location.lng();
-                    this.dat.location = place.formatted_address;
-                    this.zoom = 12;
-                });
-            });
-        });
+        
     }
 
     private setCurrentPosition() {
