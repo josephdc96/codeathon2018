@@ -4,5 +4,8 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  darkSkyKey: '05df4dec29e779391562dc0828e8d3e9',
+  mapsKey: 'AIzaSyBZKAClyAPAexO_Uojq7xAv0Vwe_cYKdyY',
+  serverURL: 'http://localhost:3000'
 };

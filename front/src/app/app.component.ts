@@ -1,12 +1,12 @@
 import { Component, Inject, OnInit, NgZone, ViewChild, ElementRef } from '@angular/core';
-import { MatDialogRef, MatDialog, MAT_DIALOG_DATA, MatDateFormats } from '@angular/material';
-import { MapsAPILoader } from '@agm/core';
+import { MatDateFormats } from '@angular/material/core';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl } from '@angular/forms';
-import { } from 'googlemaps';
 import { HttpClient } from '@angular/common/http';
 import { DarkSkyApi } from 'dark-sky-api';
 import { Chart } from 'chart.js';
 import * as moment from 'moment';
+import { environment } from '../environments/environment.prod';
 
 @Component({
     selector: 'app-root',
@@ -14,7 +14,6 @@ import * as moment from 'moment';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-    apiKey = '05df4dec29e779391562dc0828e8d3e9';
     data: Data = null;
 
     location = {
@@ -45,7 +44,7 @@ export class AppComponent implements OnInit {
     doughnutColors: any[] = [
     ];
 
-    chart = [];
+    chart: Chart = null;
 
     hourly: Forecast[] = [
     ];
@@ -104,7 +103,7 @@ export class AppComponent implements OnInit {
     }
 
     getDay() {
-        const url = 'http://localhost:3000/daily' + '/' + this.location.latitude + '/' + this.location.longitude;
+        const url = `${environment.serverURL}/daily/${this.location.latitude}/${this.location.longitude}`;
         this.http.get<Data>(url).subscribe(data => {
             this.currentday = {
                 day: 'Today',
@@ -158,7 +157,7 @@ export class AppComponent implements OnInit {
                 const time = hour + ':' + minute;
 
                 if (y.precipProbability === 0) {
-                    y.precipProbability = y.precipProbability + .01;
+                    y.precipProbability = y.precipProbability + .001;
                 }
 
                 this.doughnutChartData.push(y.precipProbability * 100);
@@ -170,7 +169,7 @@ export class AppComponent implements OnInit {
                 data: {
                     datasets: [{
                         data: this.doughnutChartData,
-                        labels: this.doughnutChartLabels
+                        
                     }]
                 },
                 options: {
@@ -235,7 +234,7 @@ export class AppComponent implements OnInit {
         ];
 
         times.forEach(x => {
-            const url = 'http://localhost:3000/history/' + this.location.latitude + '/' + this.location.longitude + '/' + x;
+            const url = `${environment.serverURL}/history/${this.location.latitude}/${this.location.longitude}/${x}`;
             this.http.get<Data>(url).subscribe(data => {
                 this.historical.push({
                     day: new Date(x * 1000).toDateString(),
@@ -390,13 +389,12 @@ export class LocationDialogComponent implements OnInit {
     public searchControl: FormControl;
     public zoom: number;
 
-    @ViewChild('search')
+    @ViewChild('search', { static: true })
     public searchElementRef: ElementRef;
 
     constructor(
         public dialogRef: MatDialogRef<LocationDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
-        private mapsAPILoader: MapsAPILoader,
         private ngZone: NgZone) {
 
     }
@@ -406,24 +404,7 @@ export class LocationDialogComponent implements OnInit {
 
         this.setCurrentPosition();
 
-        this.mapsAPILoader.load().then(() => {
-            const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-            });
-            autocomplete.addListener('place_changed', () => {
-                this.ngZone.run(() => {
-                    const place: google.maps.places.PlaceResult = autocomplete.getPlace();
-
-                    if (place.geometry === undefined || place.geometry === null) {
-                        return;
-                    }
-
-                    this.dat.latitude = place.geometry.location.lat();
-                    this.dat.longitude = place.geometry.location.lng();
-                    this.dat.location = place.formatted_address;
-                    this.zoom = 12;
-                });
-            });
-        });
+        
     }
 
     private setCurrentPosition() {

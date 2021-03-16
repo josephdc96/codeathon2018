@@ -7,7 +7,8 @@
 /out-tsc
 
 # dependencies
-/node_modules
+front/node_modules
+back/node_modules
 
 # IDEs and editors
 /.idea
@@ -41,3 +42,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+front/src/environments
+back/environment.js

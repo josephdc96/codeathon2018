@@ -1,8 +1,7 @@
 var https = require("https");
 var express = require('express');
 var app = express();
-
-var apiKey = "05df4dec29e779391562dc0828e8d3e9"
+var keys = require('./environment');
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -12,7 +11,7 @@ app.use(function(req, res, next) {
 
 app.get('/daily/:lat/:long', function (req, res) {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-    https.get("https://api.darksky.net/forecast/" + apiKey + "/" + req.params.lat + "," + req.params.long, result => {
+    https.get("https://api.darksky.net/forecast/" + keys.darkSkyKey + "/" + req.params.lat + "," + req.params.long, result => {
         result.setEncoding("utf8");
         let body = "";
         result.on("data", data => {
@@ -27,7 +26,7 @@ app.get('/daily/:lat/:long', function (req, res) {
 
 app.get('/history/:lat/:long/:time', function (req, res) {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-    https.get("https://api.darksky.net/forecast/" + apiKey + "/" + req.params.lat + ',' + req.params.long + ',' + req.params.time, result => {
+    https.get("https://api.darksky.net/forecast/" + keys.darkSkyKey + "/" + req.params.lat + ',' + req.params.long + ',' + req.params.time, result => {
         result.setEncoding("utf8");
         let body = "";
         result.on("data", data => {

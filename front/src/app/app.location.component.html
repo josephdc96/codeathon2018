@@ -3,7 +3,7 @@
     <mat-form-field style="width: 100%">
         <input matInput placeholder="Location: City, State; Zip; or Latitute/Longitude" #search [formControl]="searchControl">
     </mat-form-field>
-    {{location}}
+    {{dat.location}}
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Cancel</button>

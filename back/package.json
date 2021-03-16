@@ -1,0 +1,17 @@
+{
+  "name": "codeathon-back",
+  "version": "2.0.0-beta.0",
+  "description": "Backend component of Joseph Cauble's 2018 Auburn Codeathon entry",
+  "main": "server.js",
+  "repository": "https://github.com/josephdc96/codeathon2018",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
